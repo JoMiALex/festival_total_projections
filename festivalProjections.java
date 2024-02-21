@@ -40,9 +40,7 @@
             switch(choice){
                 case 1:{
                     total = campCost + foodCost + carParkCost + admission + hotelCost;
-                    //System.out.println(total);
-                    //System.out.println("The total cost projection for " + festName + " is this " + total);
-                    System.out.printf("The total cost projection for %s is %f.",festName, total);
+                    System.out.printf("The total cost projection for %s is %.2f.%n",festName, total);
                     }break;
                 case 2:{
                     System.out.println("None saved");
