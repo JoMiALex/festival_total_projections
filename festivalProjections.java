@@ -39,8 +39,26 @@
         while(total == 0){
             switch(choice){
                 case 1:{
-                    total = campCost + foodCost + carParkCost + admission + hotelCost;
-                    System.out.printf("The total cost projection for %s is %.2f.%n",festName, total);
+                    /*Get Input From User */
+                    System.out.println("Enter the cost of housing per night: ");
+                    double HousingCostPerNight = keyboard.nextDouble();
+                    System.out.println("Enter the number of nights you plan to stay: ");
+                    int NumOfNights = keyboard.nextInt();
+                    System.out.println("Enter the average cost of food per day: ");
+                    double FoodCostPerDay = keyboard.nextdouble();
+                    System.out.println("Enter the number of days you plan to attend the festival: ");
+                    int NumOfDaysAtFest = keyboard.nextInt();
+                    System.out.println("Enter the cost of the festival ticket: ");
+                    Double FestPrice = keyboard.nextDouble();
+                    /*Calculate the Total Cost */
+                    double TotalHousingCost = HousingCostPerNight * NumOfNights;
+                    double TotalFoodCost = FoodCostPerDay * NumOfDaysAtFest;
+                    double TotalCost = TotalHousingCost + TotalFoodCost + FestPrice;
+                    /*Display the Total Cost */
+                    System.out.printIn("Total cost of the music festival trip:" + TotalCost);
+
+                    //"total = campCost + foodCost + carParkCost + admission + hotelCost;
+                    //System.out.printf("The total cost projection for %s is %.2f.%n",festName, total);
                     }break;
                 case 2:{
                     System.out.println("None saved");
