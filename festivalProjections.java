@@ -19,7 +19,7 @@
 
         int choice, itemCount;
         double admission = 600.0, hotelCost = 300.0, bnbCost = 210.0, 
-        campCost= 90.0, foodCost = 180, carParkCost = 90.0,
+        campCost= 150.0, foodCost = 180, carParkCost = 90.0,
         total = 0.0;
         String msgError = "Error! Try again.",
         festName = "Coachella";
@@ -44,8 +44,11 @@
         while(total == 0){
             switch(choice){
                 case 1:{
-                    total = campCost + foodCost + carParkCost + admission + hotelCost;
+                    total = campCost + foodCost + admission;
                     System.out.printf("The total cost projection for %s is %.2f.%n",festName, total);
+                    System.out.println("The GA ticket price is: " + admission);
+                    System.out.println("Car Camping: " +  campCost);
+                    System.out.println("Food: " + foodCost);
                     }break;
                 case 2:{
                     System.out.println("None saved");
@@ -63,7 +66,7 @@
         if(total == -1)
             System.out.println("Goodbye!");
         else{
-            System.out.println("Going to " + festName + " will cost: " + total);
+            System.out.printf("Have fun at %s this weekend!", festName);
             
         }
         
