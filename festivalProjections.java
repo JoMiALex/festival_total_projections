@@ -45,7 +45,7 @@
                     System.out.println("Enter the number of nights you plan to stay: ");
                     int NumOfNights = keyboard.nextInt();
                     System.out.println("Enter the average cost of food per day: ");
-                    double FoodCostPerDay = keyboard.nextdouble();
+                    double FoodCostPerDay = keyboard.nextDouble();
                     System.out.println("Enter the number of days you plan to attend the festival: ");
                     int NumOfDaysAtFest = keyboard.nextInt();
                     System.out.println("Enter the cost of the festival ticket: ");
@@ -55,7 +55,7 @@
                     double TotalFoodCost = FoodCostPerDay * NumOfDaysAtFest;
                     double TotalCost = TotalHousingCost + TotalFoodCost + FestPrice;
                     /*Display the Total Cost */
-                    System.out.printIn("Total cost of the music festival trip:" + TotalCost);
+                    System.out.println("Total cost of the music festival trip:" + TotalCost);
 
                     //"total = campCost + foodCost + carParkCost + admission + hotelCost;
                     //System.out.printf("The total cost projection for %s is %.2f.%n",festName, total);
