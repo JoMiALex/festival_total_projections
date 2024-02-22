@@ -20,43 +20,42 @@
         int choice, itemCount;
         double admission = 600.0, hotelCost = 300.0, bnbCost = 210.0, 
         campCost= 150.0, foodCost = 180, carParkCost = 90.0,
-        total = 0.0;
+        total = 0;
         String msgError = "Error! Try again.",
         festName = "Coachella";
 
          Scanner keyboard = new Scanner(System.in);
 
-        System.out.println("Hello Welcome to Festival Projections!\n");
-        System.out.println("Please make a choice from the menu options to get started.");
-        System.out.println("__________________________________________________________");
-        System.out.println("1. Make Festival Cost Projection");
-        System.out.println("2. Access Saved Projections");
-        System.out.println("3. Change Presets");
-        System.out.println("4. Exit");
-        System.out.print("Selection: ");
-        choice = keyboard.nextInt();
-
-        while(choice < 1 || choice > 4){
-            System.out.println("Invalid choice please select a choice from the menu.\nEnter your choice(1-4):");
-            choice = keyboard.nextInt();
-            }
+         System.out.println("Hello Welcome to Festival Projections!\n");
         
         while(total == 0){
+            System.out.println("Please make a choice from the menu options to get started.");
+            System.out.println("__________________________________________________________");
+            System.out.println("1. Make Festival Cost Projection");
+            System.out.println("2. Access Saved Projections");
+            System.out.println("3. Change Presets");
+            System.out.println("4. Exit");
+            System.out.print("Selection: ");
+            choice = keyboard.nextInt();
+            
+            while(choice < 1 || choice > 4){
+                System.out.println("Invalid choice please select a choice from the menu.\nEnter your choice(1-4):");
+                choice = keyboard.nextInt();
+                }
+            
             switch(choice){
                 case 1:{
                     total = campCost + foodCost + admission;
-                    System.out.printf("The total cost projection for %s is %.2f.%n",festName, total);
+                    System.out.printf("\n\nThe total cost projection for %s is %.2f.%n",festName, total);
                     System.out.println("The GA ticket price is: " + admission);
                     System.out.println("Car Camping: " +  campCost);
                     System.out.println("Food: " + foodCost);
                     }break;
                 case 2:{
-                    System.out.println("None saved");
-                    total = -1;
+                    System.out.println("\nNone saved");
                     }break;
                 case 3:{
-                    System.out.println("Unable to change presets currently. :(");
-                    total = -1;
+                    System.out.println("\nUnable to change presets currently. :(");
                     }break;
                 default:
                     total = -1;
@@ -64,9 +63,9 @@
         }
 
         if(total == -1)
-            System.out.println("Goodbye!");
+            System.out.println("\nGoodbye!\n\n");
         else{
-            System.out.printf("Have fun at %s this weekend!", festName);
+            System.out.printf("\n\nHave fun at %s this weekend!\n\n", festName);
             
         }
         
