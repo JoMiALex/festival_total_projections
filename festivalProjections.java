@@ -8,10 +8,15 @@
  */
 
  import java.util.Scanner;
+ import java.io.*;
+ import java.util.*;
 
  public class festivalProjections {
+    //private static final String FILENAME = "festivals.txt";
 
     public static void main(String[] args){
+        //Map<String, String> festivals = loadFestivals();
+
         int choice, itemCount;
         double admission = 600.0, hotelCost = 300.0, bnbCost = 210.0, 
         campCost= 90.0, foodCost = 180, carParkCost = 90.0,
@@ -39,26 +44,8 @@
         while(total == 0){
             switch(choice){
                 case 1:{
-                    /*Get Input From User */
-                    System.out.println("Enter the cost of housing per night: ");
-                    double HousingCostPerNight = keyboard.nextDouble();
-                    System.out.println("Enter the number of nights you plan to stay: ");
-                    int NumOfNights = keyboard.nextInt();
-                    System.out.println("Enter the average cost of food per day: ");
-                    double FoodCostPerDay = keyboard.nextDouble();
-                    System.out.println("Enter the number of days you plan to attend the festival: ");
-                    int NumOfDaysAtFest = keyboard.nextInt();
-                    System.out.println("Enter the cost of the festival ticket: ");
-                    Double FestPrice = keyboard.nextDouble();
-                    /*Calculate the Total Cost */
-                    double TotalHousingCost = HousingCostPerNight * NumOfNights;
-                    double TotalFoodCost = FoodCostPerDay * NumOfDaysAtFest;
-                    double TotalCost = TotalHousingCost + TotalFoodCost + FestPrice;
-                    /*Display the Total Cost */
-                    System.out.println("Total cost of the music festival trip:" + TotalCost);
-
-                    //"total = campCost + foodCost + carParkCost + admission + hotelCost;
-                    //System.out.printf("The total cost projection for %s is %.2f.%n",festName, total);
+                    total = campCost + foodCost + carParkCost + admission + hotelCost;
+                    System.out.printf("The total cost projection for %s is %.2f.%n",festName, total);
                     }break;
                 case 2:{
                     System.out.println("None saved");
@@ -83,3 +70,53 @@
     }
     
  }
+
+/*private static Map <String, FestivalDetails> loadFestivals(){
+    Map<string, FestivalDetails> festivals = new HashMap<>();
+    try (BufferedReader reader = new BufferedReader(new FileReader(FILENAME))){
+        String line;
+        while((line = reader.readline()) != null){
+            String[] parts = line.splite(":");
+            String name = parts[0];
+            double admission = Double.parseDouble(parts[1]);
+            double hotelCost = Double.parseDouble(parts[2]);
+            double carParkCost = Double.parseDouble(parts[3]);
+            double foodCost = Double.parseDouble(parts[4]);
+            double campCost = Double.parseDouble(parts[5]);
+            festivals.put(name, new FestivalDetails(admission, hotelCost, carParkCost, foodCost, campCost));
+        }
+    } catch (IOException error){
+        //File does not exist or cannot be read
+    }
+    return festivals;
+}*/
+
+ /*private static void SaveFestivals(Map<String, FestivalDetails> Festivals){
+    try(BufferedWriter writer = new BufferedWriter(new FileWriter(FILENAME))){
+        for(Map.Entry<String, FestivalDetails> entry: festivals.entrySet()){
+            writer.write(entry.getKey() + ":" + entry.getValue() + "\n"); 
+        }
+    } catch (IOException error){
+        //Error occured while saving
+        System.err.println("Error saving festivals: " + error.getMessage)
+    }
+ }*/
+
+ /*private static class FestivalDetails{
+    private double admission;
+    private double hotelCost;
+    private double carParkCost;
+    private double foodCost;
+    private double campCost;
+
+    public FestivalDetails(double admission, double hotelCost, double carParkCost, double foodCost, Double campCost){
+        this.admission = admission;
+        this.hotelCost = hotelCost;
+        this.carParkCost = carParkCost;
+        this.foodCost = foodCost;
+        this.campCost = campCost;
+    }
+    public String toString(){
+        return "Admission: " + admission + ", Hotel: " + hotelCost + ", Car Parking: " + carParkCost + ", Food: " + foodCost + ", Camp: " + campCost;
+    }
+ }*/
