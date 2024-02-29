@@ -78,7 +78,7 @@
     try (BufferedReader reader = new BufferedReader(new FileReader(FILENAME))){
         String line;
         while((line = reader.readline()) != null){
-            String[] parts = line.splite(":");
+            String[] parts = line.splite(",");
             String name = parts[0];
             double admission = Double.parseDouble(parts[1]);
             double hotelCost = Double.parseDouble(parts[2]);
