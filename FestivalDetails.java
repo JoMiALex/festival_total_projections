@@ -1,11 +1,13 @@
 public class FestivalDetails {
+        private String festName;
         private double admission;
         private double hotelCost;
         private double carParkCost;
         private double foodCost;
         private double campCost;
     
-        public FestivalDetails(double admission, double hotelCost, double carParkCost, double foodCost, Double campCost){
+        public FestivalDetails(String festName, double admission, double hotelCost, double carParkCost, double foodCost, Double campCost){
+            this.festName = festName;
             this.admission = admission;
             this.hotelCost = hotelCost;
             this.carParkCost = carParkCost;
@@ -13,6 +15,6 @@ public class FestivalDetails {
             this.campCost = campCost;
         }
         public String toString(){
-            return "Admission: " + admission + ", Hotel: " + hotelCost + ", Car Parking: " + carParkCost + ", Food: " + foodCost + ", Camp: " + campCost;
+            return festName + ":\nAdmission: " + admission + "\nHotel: " + hotelCost + "\nCar Parking: " + carParkCost + "\nFood: " + foodCost + "\nCamp: " + campCost;
         }
 }
