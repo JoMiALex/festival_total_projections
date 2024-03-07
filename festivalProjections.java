@@ -9,13 +9,13 @@
 
  import java.util.Scanner;
  import java.io.*;
- import java.util.*;
+import java.util.*;
 
  public class festivalProjections {
-    //private static final String FILENAME = "festivals.txt";
+      private static final String FILENAME = "festivals.txt";
 
     public static void main(String[] args){
-        //Map<String, String> festivals = loadFestivals();
+        Map<String, FestivalDetails> festivals = loadFestivals();
 
         int choice, itemCount;
         double admission = 600.0, hotelCost = 300.0, bnbCost = 210.0, 
@@ -23,9 +23,7 @@
         total = 0;
         String msgError = "Error! Try again.",
         festName = "Coachella";
-
          Scanner keyboard = new Scanner(System.in);
-
          System.out.println("Hello Welcome to Festival Projections!\n");
         
         while(total == 0){
@@ -45,17 +43,13 @@
             
             switch(choice){
                 case 1:{
-                    total = campCost + foodCost + admission;
-                    System.out.printf("\n\nThe total cost projection for %s is %.2f.%n",festName, total);
-                    System.out.println("The GA ticket price is: " + admission);
-                    System.out.println("Car Camping: " +  campCost);
-                    System.out.println("Food: " + foodCost);
+                    addFestival(keyboard, festivals);
                     }break;
                 case 2:{
-                    System.out.println("\nNone saved");
+                    accessSavedProjections(festivals);
                     }break;
                 case 3:{
-                    System.out.println("\nUnable to change presets currently. :(");
+                    changePresets(keyboard, festivals);
                     }break;
                 default:
                     total = -1;
@@ -70,55 +64,156 @@
         }
         
     }
+
+private static Map<String, FestivalDetails> loadFestivals() {
+        Map<String, FestivalDetails> festivals = new HashMap<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILENAME))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(":");
+                String name = parts[0];
+                double admissionCost = Double.parseDouble(parts[1]);
+                double hotelCost = Double.parseDouble(parts[2]);
+                double carParkingCost = Double.parseDouble(parts[3]);
+                double foodCost = Double.parseDouble(parts[4]);
+                double campCost = Double.parseDouble(parts[5]);
+                festivals.put(name, new FestivalDetails(admissionCost, hotelCost, carParkingCost, foodCost, campCost));
+            }
+        } catch (IOException e) {
+            // File does not exist or cannot be read
+        }
+        return festivals;
+    }
+
+    private static void listFestivals(Map<String, FestivalDetails> festivals) {
+        System.out.println("Festivals:");
+        for (String festival : festivals.keySet()) {
+            System.out.println(festival + ": " + festivals.get(festival));
+        }
+    }
+
+    private static void addFestival(Scanner keyboard, Map<String, FestivalDetails> festivals) {
+        System.out.println("Enter the name of the festival:");
+        String name = keyboard.nextLine();
+        System.out.println("Enter the admission cost:");
+        double admissionCost = keyboard.nextDouble();
+        System.out.println("Enter the hotel cost:");
+        double hotelCost = keyboard.nextDouble();
+        System.out.println("Enter the car parking cost:");
+        double carParkingCost = keyboard.nextDouble();
+        System.out.println("Enter the food cost:");
+        double foodCost = keyboard.nextDouble();
+        System.out.println("Enter the camp cost:");
+        double campCost = keyboard.nextDouble();
+        festivals.put(name, new FestivalDetails(admissionCost, hotelCost, carParkingCost, foodCost, campCost));
+        System.out.println("Festival added successfully!");
+    }
+
+    private static void saveFestivals(Map<String, FestivalDetails> festivals) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILENAME))) {
+            for (Map.Entry<String, FestivalDetails> entry : festivals.entrySet()) {
+                writer.write(entry.getKey() + ":" + entry.getValue() + "\n");
+            }
+        } catch (IOException e) {
+            // Error occurred while saving
+            System.err.println("Error saving festivals: " + e.getMessage());
+        }
+    }
+
+    private static class FestivalDetails {
+        private double admissionCost;
+        private double hotelCost;
+        private double carParkingCost;
+        private double foodCost;
+        private double campCost;
+
+        public FestivalDetails(double admissionCost, double hotelCost, double carParkingCost, double foodCost, double campCost) {
+            this.admissionCost = admissionCost;
+            this.hotelCost = hotelCost;
+            this.carParkingCost = carParkingCost;
+            this.foodCost = foodCost;
+            this.campCost = campCost;
+        }
+        public void setAdmissionCost(double admissionCost) {
+            this.admissionCost = admissionCost;
+        }
+
+        public void setHotelCost(double hotelCost) {
+            this.hotelCost = hotelCost;
+        }
+        
+        public void setcarParkingCost(double carParkingCost){
+            this.carParkingCost = carParkingCost;
+        }
+        
+        public void setFoodCost(double foodCost){
+            this.foodCost = foodCost;
+        }
+        
+        public void setCampCost(double CampCost){
+            this.campCost = campCost;
+        }
+
+        @Override
+        public String toString() {
+            return "Admission: " + admissionCost + ", Hotel: " + hotelCost + ", Car Parking: " + carParkingCost + ", Food: " + foodCost + ", Camp: " + campCost;
+        }
+    }
     
- }
-
-/*private static Map <String, FestivalDetails> loadFestivals(){
-    Map<string, FestivalDetails> festivals = new HashMap<>();
-    try (BufferedReader reader = new BufferedReader(new FileReader(FILENAME))){
-        String line;
-        while((line = reader.readline()) != null){
-            String[] parts = line.splite(",");
-            String name = parts[0];
-            double admission = Double.parseDouble(parts[1]);
-            double hotelCost = Double.parseDouble(parts[2]);
-            double carParkCost = Double.parseDouble(parts[3]);
-            double foodCost = Double.parseDouble(parts[4]);
-            double campCost = Double.parseDouble(parts[5]);
-            festivals.put(name, new FestivalDetails(admission, hotelCost, carParkCost, foodCost, campCost));
-        }
-    } catch (IOException error){
-        //File does not exist or cannot be read
+    private static void changePresets(Scanner keyboard, Map<String, FestivalDetails> festivals) {
+    System.out.println("Enter the name of the festival to change details:");
+    String festivalName = keyboard.nextLine();
+    FestivalDetails festival = festivals.get(festivalName);
+    if (festival == null) {
+        System.out.println("Festival not found.");
+        return;
     }
-    return festivals;
-}*/
 
- /*private static void SaveFestivals(Map<String, FestivalDetails> Festivals){
-    try(BufferedWriter writer = new BufferedWriter(new FileWriter(FILENAME))){
-        for(Map.Entry<String, FestivalDetails> entry: festivals.entrySet()){
-            writer.write(entry.getKey() + ":" + entry.getValue() + "\n"); 
-        }
-    } catch (IOException error){
-        //Error occured while saving
-        System.err.println("Error saving festivals: " + error.getMessage)
-    }
- }*/
+    System.out.println("Select the detail to change for " + festivalName + ":");
+    System.out.println("1. Admission Cost");
+    System.out.println("2. Hotel Cost");
+    System.out.println("3. Car Parking Cost");
+    System.out.println("4. Food Cost");
+    System.out.println("5. Camp Cost");
+    int choice = keyboard.nextInt();
+    keyboard.nextLine(); // Consume newline
 
- /*private static class FestivalDetails{
-    private double admission;
-    private double hotelCost;
-    private double carParkCost;
-    private double foodCost;
-    private double campCost;
+    switch (choice) {
+        case 1:
+            System.out.println("Enter new admission cost:");
+            double newAdmissionCost = keyboard.nextDouble();
+            festival.setAdmissionCost(newAdmissionCost);
+            break;
+        case 2:
+            System.out.println("Enter new hotel cost:");
+            double newHotelCost = keyboard.nextDouble();
+            festival.setHotelCost(newHotelCost);
+            break;
+        case 3:
+            System.out.println("Enter new car parking cost:");
+            double newcarParkingCost = keyboard.nextDouble();
+            festival.setcarParkingCost(newcarParkingCost);
+            break;
+        case 4:
+            System.out.println("Enter new food cost:");
+            double newFoodCost = keyboard.nextDouble();
+            festival.setFoodCost(newFoodCost);
+            break;
+        case 5:
+            System.out.println("Enter new camp cost:");
+            double newCampCost = keyboard.nextDouble();
+            festival.setCampCost(newCampCost);
+            break;
+        default:
+            System.out.println("Invalid choice, please try again.");
+    }
+}
 
-    public FestivalDetails(double admission, double hotelCost, double carParkCost, double foodCost, Double campCost){
-        this.admission = admission;
-        this.hotelCost = hotelCost;
-        this.carParkCost = carParkCost;
-        this.foodCost = foodCost;
-        this.campCost = campCost;
-    }
-    public String toString(){
-        return "Admission: " + admission + ", Hotel: " + hotelCost + ", Car Parking: " + carParkCost + ", Food: " + foodCost + ", Camp: " + campCost;
-    }
- }*/
+
+
+private static void accessSavedProjections(Map<String, FestivalDetails> festivals) {
+    System.out.println("Saved Projections:");
+    // Implement logic to display saved projections
+}
+
+}
