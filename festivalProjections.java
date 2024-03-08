@@ -12,7 +12,9 @@
 import java.util.*;
 
  public class festivalProjections {
-      private static final String FILENAME = "festivals.txt";
+      private static final String PRESETFILE = "festivals.txt";
+      private static final String SAVEFILE = "SavedProjections.txt";
+
 
     public static void main(String[] args){
         Map<String, FestivalDetails> festivals = loadFestivals();
@@ -35,6 +37,7 @@ import java.util.*;
             System.out.println("4. Exit");
             System.out.print("Selection: ");
             choice = keyboard.nextInt();
+            keyboard.nextLine();
             
             while(choice < 1 || choice > 4){
                 System.out.println("Invalid choice please select a choice from the menu.\nEnter your choice(1-4):");
@@ -67,23 +70,24 @@ import java.util.*;
 
 private static Map<String, FestivalDetails> loadFestivals() {
         Map<String, FestivalDetails> festivals = new HashMap<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(FILENAME))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(PRESETFILE))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(":");
+                String[] parts = line.split(",");
                 String name = parts[0];
                 double admissionCost = Double.parseDouble(parts[1]);
                 double hotelCost = Double.parseDouble(parts[2]);
                 double carParkingCost = Double.parseDouble(parts[3]);
                 double foodCost = Double.parseDouble(parts[4]);
                 double campCost = Double.parseDouble(parts[5]);
-                festivals.put(name, new FestivalDetails(admissionCost, hotelCost, carParkingCost, foodCost, campCost));
+                festivals.put(name, new FestivalDetails(name, admissionCost, hotelCost, carParkingCost, foodCost, campCost));
+                //FestivalDetails festival = new FestivalDetails(parts[1], parts[2],parts[3],parts[4],parts[5]);
             }
         } catch (IOException e) {
             // File does not exist or cannot be read
         }
         return festivals;
-    }
+    }//generate multiple objects
 
     private static void listFestivals(Map<String, FestivalDetails> festivals) {
         System.out.println("Festivals:");
@@ -105,12 +109,12 @@ private static Map<String, FestivalDetails> loadFestivals() {
         double foodCost = keyboard.nextDouble();
         System.out.println("Enter the camp cost:");
         double campCost = keyboard.nextDouble();
-        festivals.put(name, new FestivalDetails(admissionCost, hotelCost, carParkingCost, foodCost, campCost));
+        //festivals.put(name, new FestivalDetails(admissionCost, hotelCost, carParkingCost, foodCost, campCost));
         System.out.println("Festival added successfully!");
-    }
+    }//format 
 
     private static void saveFestivals(Map<String, FestivalDetails> festivals) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILENAME))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(PRESETFILE))) {
             for (Map.Entry<String, FestivalDetails> entry : festivals.entrySet()) {
                 writer.write(entry.getKey() + ":" + entry.getValue() + "\n");
             }
@@ -119,7 +123,7 @@ private static Map<String, FestivalDetails> loadFestivals() {
             System.err.println("Error saving festivals: " + e.getMessage());
         }
     }
-
+    /*
     private static class FestivalDetails {
         private double admissionCost;
         private double hotelCost;
@@ -159,6 +163,7 @@ private static Map<String, FestivalDetails> loadFestivals() {
             return "Admission: " + admissionCost + ", Hotel: " + hotelCost + ", Car Parking: " + carParkingCost + ", Food: " + foodCost + ", Camp: " + campCost;
         }
     }
+    */
     
     private static void changePresets(Scanner keyboard, Map<String, FestivalDetails> festivals) {
     System.out.println("Enter the name of the festival to change details:");
