@@ -187,7 +187,7 @@ private static Map<String, FestivalDetails> loadFestivals() {
         case 1:
             System.out.println("Enter new admission cost:");
             double newAdmissionCost = keyboard.nextDouble();
-            festival.setAdmissionCost(newAdmissionCost);
+            festival.setTicketGA(newAdmissionCost);
             break;
         case 2:
             System.out.println("Enter new hotel cost:");
@@ -196,8 +196,8 @@ private static Map<String, FestivalDetails> loadFestivals() {
             break;
         case 3:
             System.out.println("Enter new car parking cost:");
-            double newcarParkingCost = keyboard.nextDouble();
-            festival.setcarParkingCost(newcarParkingCost);
+            double newCarParkingCost = keyboard.nextDouble();
+            festival.setCarParkingCost(newCarParkingCost);
             break;
         case 4:
             System.out.println("Enter new food cost:");

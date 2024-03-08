@@ -1,29 +1,41 @@
 public class FestivalDetails {
     private String festName;
-    private double admissionCost;
+    private double ticketGA;
+    private double ticketVIP;
+    private double campCost;
     private double hotelCost;
+    private double bnbCost;
     private double carParkingCost;
     private double foodCost;
-    private double campCost;
     
 
-        public FestivalDetails(String festName, double admissionCost, double hotelCost, double carParkingCost, double foodCost, double campCost) {
+        public FestivalDetails(String festName, double ticketGA, double ticketVIP, double campCost, double hotelCost, double bnbCost, double carParkingCost, double foodCost) {
             this.festName = festName;
-            this.admissionCost = admissionCost;
+            this.ticketGA = ticketGA;
+            this.ticketVIP = ticketVIP;
             this.hotelCost = hotelCost;
+            this.bnbCost = bnbCost;
             this.carParkingCost = carParkingCost;
             this.foodCost = foodCost;
             this.campCost = campCost;
         }
-        public void setAdmissionCost(double admissionCost) {
-            this.admissionCost = admissionCost;
+        public void setTicketGA(double ticketGA) {
+            this.ticketGA = ticketGA;
+        }
+
+        public void setTicketVIP(double ticketVIP) {
+            this.ticketGA = ticketVIP;
         }
 
         public void setHotelCost(double hotelCost) {
             this.hotelCost = hotelCost;
         }
+
+        public void setBnbCost(double bnbCost) {
+            this.bnbCost = bnbCost;
+        }
         
-        public void setcarParkingCost(double carParkingCost){
+        public void setCarParkingCost(double carParkingCost){
             this.carParkingCost = carParkingCost;
         }
         
@@ -31,16 +43,31 @@ public class FestivalDetails {
             this.foodCost = foodCost;
         }
         
-        public void setCampCost(double CampCost){
+        public void setCampCost(double campCost){
             this.campCost = campCost;
         }
 
+        public double getGA(){return ticketGA;}
+
+        public double getVIP(){return ticketVIP;}
+
+        public double getCamp(){return campCost;}
+
+        public double getHotel(){return hotelCost;}
+
+        public double getBnb(){return bnbCost;}
+
+        public double getParking(){return carParkingCost;}
+
+        public double getFood(){return foodCost;}
 
         @Override
         public String toString() {
-            return festName + "Admission: " + admissionCost + ", Hotel: " + hotelCost + ", Car Parking: " + carParkingCost + ", Food: " + foodCost + ", Camp: " + campCost;
+            return festName + "Admission: " + ticketGA + ", Hotel: " + hotelCost + ", Car Parking: " + carParkingCost + ", Food: " + foodCost + ", Camp: " + campCost;
         }
-        /*public String saveFormat(FestivalDetails fest){
-            return name + "," + admissionCost
-        }*/
+        
+        public String saveFormat(FestivalDetails fest){
+            return festName + "," + ticketGA + "," + ticketVIP + "," + campCost
+            + "," + hotelCost + "," + bnbCost + "," + carParkingCost + "," + foodCost;
+        }
 }
