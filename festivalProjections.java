@@ -18,9 +18,8 @@ import java.util.*;
     public static void main(String[] args){
         Map<String, FestivalDetails> storedFestival = new HashMap<String, FestivalDetails>();
         Map<String, FestivalDetails> savedProjection = new HashMap<String, FestivalDetails>();
-        //ArrayList<FestivalDetails> storedFestival = new ArrayList<FestivalDetails>();
-        //Map<String, FestivalDetails> festivals = loadFestivals();
         storedFestival = loadFestivals(storedFestival);
+        //savedProjection = ;
         FestivalDetails currFest;
 
         int choice, itemCount;
@@ -174,20 +173,20 @@ private static Map<String, FestivalDetails> loadFestivals(Map<String, FestivalDe
     }
     */
     
-    private static void changePresets(Scanner keyboard, FestivalDetails festival) {
+private static void changePresets(Scanner keyboard, FestivalDetails festival) {
     if (festival == null) {
         System.out.println("Festival not found.");
         return;
     }
     System.out.println(festival.toString());
-    System.out.println("Select the detail to change for " + festival.get + ":");
+    System.out.println("Select the detail to change for " + festival.getName() + ":");
     System.out.println("1. GA Admission Cost");
     System.out.println("2. VIP Admission Cost");
     System.out.println("3. Camp Cost");
     System.out.println("4. Hotel Cost");
     System.out.println("5. Air Bnb Cost");
     System.out.println("6. Car Parking Cost");
-    System.out.println("7. Food Cost");
+    System.out.print("7. Food Cost/nSelection: ");
     int choice = keyboard.nextInt();
     keyboard.nextLine(); // Consume newline
     double setNew;
@@ -231,7 +230,7 @@ private static Map<String, FestivalDetails> loadFestivals(Map<String, FestivalDe
         default:
             System.out.println("Invalid choice, please try again.");
     }
-    System.out.println("_________________________________________/n" + festival.toString());
+    System.out.println("_________________________________________/nUpdated values:" + festival.toString());
 }
 
 
