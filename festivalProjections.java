@@ -21,6 +21,7 @@ import java.util.*;
         //ArrayList<FestivalDetails> storedFestival = new ArrayList<FestivalDetails>();
         //Map<String, FestivalDetails> festivals = loadFestivals();
         storedFestival = loadFestivals(storedFestival);
+        FestivalDetails currFest;
 
         int choice, itemCount;
         double admission = 600.0, hotelCost = 300.0, bnbCost = 210.0, 
@@ -55,7 +56,10 @@ import java.util.*;
                     accessSavedProjections(savedProjection);
                     }break;
                 case 3:{
-                    changePresets(keyboard, storedFestival);
+                    System.out.println("Enter the name of the festival to change details:");
+                    String festivalName = keyboard.nextLine();
+                    currFest = storedFestival.get(festivalName);
+                    changePresets(keyboard, currFest);
                     }break;
                 default:
                     total = -1;
@@ -170,53 +174,64 @@ private static Map<String, FestivalDetails> loadFestivals(Map<String, FestivalDe
     }
     */
     
-    private static void changePresets(Scanner keyboard, Map<String, FestivalDetails> festivals) {
-    System.out.println("Enter the name of the festival to change details:");
-    String festivalName = keyboard.nextLine();
-    FestivalDetails festival = festivals.get(festivalName);
+    private static void changePresets(Scanner keyboard, FestivalDetails festival) {
     if (festival == null) {
         System.out.println("Festival not found.");
         return;
     }
     System.out.println(festival.toString());
-    System.out.println("Select the detail to change for " + festivalName + ":");
-    System.out.println("1. Admission Cost");
-    System.out.println("2. Hotel Cost");
-    System.out.println("3. Car Parking Cost");
-    System.out.println("4. Food Cost");
-    System.out.println("5. Camp Cost");
+    System.out.println("Select the detail to change for " + festival.get + ":");
+    System.out.println("1. GA Admission Cost");
+    System.out.println("2. VIP Admission Cost");
+    System.out.println("3. Camp Cost");
+    System.out.println("4. Hotel Cost");
+    System.out.println("5. Air Bnb Cost");
+    System.out.println("6. Car Parking Cost");
+    System.out.println("7. Food Cost");
     int choice = keyboard.nextInt();
     keyboard.nextLine(); // Consume newline
+    double setNew;
 
     switch (choice) {
         case 1:
-            System.out.println("Enter new admission cost:");
-            double newAdmissionCost = keyboard.nextDouble();
-            festival.setTicketGA(newAdmissionCost);
+            System.out.println("Enter new GA cost:");
+            setNew = keyboard.nextDouble();
+            festival.setTicketGA(setNew);
             break;
         case 2:
-            System.out.println("Enter new hotel cost:");
-            double newHotelCost = keyboard.nextDouble();
-            festival.setHotelCost(newHotelCost);
+            System.out.println("Enter new VIP cost:");
+            setNew = keyboard.nextDouble();
+            festival.setTicketVIP(setNew);
             break;
         case 3:
-            System.out.println("Enter new car parking cost:");
-            double newCarParkingCost = keyboard.nextDouble();
-            festival.setCarParkingCost(newCarParkingCost);
+            System.out.println("Enter new camping cost:");
+            setNew = keyboard.nextDouble();
+            festival.setCampCost(setNew);
             break;
         case 4:
-            System.out.println("Enter new food cost:");
-            double newFoodCost = keyboard.nextDouble();
-            festival.setFoodCost(newFoodCost);
+            System.out.println("Enter new hotel cost:");
+            setNew = keyboard.nextDouble();
+            festival.setHotelCost(setNew);
             break;
         case 5:
-            System.out.println("Enter new camp cost:");
-            double newCampCost = keyboard.nextDouble();
-            festival.setCampCost(newCampCost);
+            System.out.println("Enter new Air Bnb cost:");
+            setNew = keyboard.nextDouble();
+            festival.setBnbCost(setNew);
+            break;
+        case 6:
+            System.out.println("Enter new car parking cost:");
+            setNew = keyboard.nextDouble();
+            festival.setCarParkingCost(setNew);
+            break;
+        case 7:
+            System.out.println("Enter new food cost:");
+            setNew = keyboard.nextDouble();
+            festival.setFoodCost(setNew);
             break;
         default:
             System.out.println("Invalid choice, please try again.");
     }
+    System.out.println("_________________________________________/n" + festival.toString());
 }
 
 

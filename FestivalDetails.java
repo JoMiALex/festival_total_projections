@@ -19,6 +19,10 @@ public class FestivalDetails {
             this.foodCost = foodCost;
             this.campCost = campCost;
         }
+        public void setName(String festName) {
+            this.festName = festName;
+        }
+
         public void setTicketGA(double ticketGA) {
             this.ticketGA = ticketGA;
         }
@@ -47,6 +51,8 @@ public class FestivalDetails {
             this.campCost = campCost;
         }
 
+        public String getName(){return festName;}
+        
         public double getGA(){return ticketGA;}
 
         public double getVIP(){return ticketVIP;}
