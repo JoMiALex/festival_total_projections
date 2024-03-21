@@ -7,7 +7,6 @@
  * @author Vincent Tran
  */
 
- import java.util.Scanner;
  import java.io.*;
 import java.util.*;
 
@@ -17,7 +16,11 @@ import java.util.*;
 
 
     public static void main(String[] args){
-        Map<String, FestivalDetails> festivals = loadFestivals();
+        Map<String, FestivalDetails> storedFestival = new HashMap<String, FestivalDetails>();
+        Map<String, FestivalDetails> savedProjection = new HashMap<String, FestivalDetails>();
+        //ArrayList<FestivalDetails> storedFestival = new ArrayList<FestivalDetails>();
+        //Map<String, FestivalDetails> festivals = loadFestivals();
+        storedFestival = loadFestivals(storedFestival);
 
         int choice, itemCount;
         double admission = 600.0, hotelCost = 300.0, bnbCost = 210.0, 
@@ -46,13 +49,13 @@ import java.util.*;
             
             switch(choice){
                 case 1:{
-                    addFestival(keyboard, festivals);
+                    addFestival(keyboard, storedFestival);
                     }break;
                 case 2:{
-                    accessSavedProjections(festivals);
+                    accessSavedProjections(savedProjection);
                     }break;
                 case 3:{
-                    changePresets(keyboard, festivals);
+                    changePresets(keyboard, storedFestival);
                     }break;
                 default:
                     total = -1;
@@ -68,19 +71,21 @@ import java.util.*;
         
     }
 
-private static Map<String, FestivalDetails> loadFestivals() {
-        Map<String, FestivalDetails> festivals = new HashMap<>();
+private static Map<String, FestivalDetails> loadFestivals(Map<String, FestivalDetails> festivals) {
+        //Map<String, FestivalDetails> festivals = new HashMap<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(PRESETFILE))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
                 String name = parts[0];
-                double admissionCost = Double.parseDouble(parts[1]);
-                double hotelCost = Double.parseDouble(parts[2]);
-                double carParkingCost = Double.parseDouble(parts[3]);
-                double foodCost = Double.parseDouble(parts[4]);
-                double campCost = Double.parseDouble(parts[5]);
-                festivals.put(name, new FestivalDetails(name, admissionCost, hotelCost, carParkingCost, foodCost, campCost));
+                double ticketGA = Double.parseDouble(parts[1]);
+                double ticketVIP = Double.parseDouble(parts[2]);
+                double campCost = Double.parseDouble(parts[3]);
+                double hotelCost = Double.parseDouble(parts[4]);
+                double bnbCost = Double.parseDouble(parts[5]);
+                double carParkingCost = Double.parseDouble(parts[6]);
+                double foodCost = Double.parseDouble(parts[7]);
+                festivals.put(name, new FestivalDetails(name, ticketGA, ticketVIP, campCost, hotelCost, bnbCost, carParkingCost, foodCost));
                 //FestivalDetails festival = new FestivalDetails(parts[1], parts[2],parts[3],parts[4],parts[5]);
             }
         } catch (IOException e) {
@@ -173,7 +178,7 @@ private static Map<String, FestivalDetails> loadFestivals() {
         System.out.println("Festival not found.");
         return;
     }
-
+    System.out.println(festival.toString());
     System.out.println("Select the detail to change for " + festivalName + ":");
     System.out.println("1. Admission Cost");
     System.out.println("2. Hotel Cost");
