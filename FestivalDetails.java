@@ -63,7 +63,7 @@ public class FestivalDetails {
 
         @Override
         public String toString() {
-            return festName + "Admission: " + ticketGA + ", Hotel: " + hotelCost + ", Car Parking: " + carParkingCost + ", Food: " + foodCost + ", Camp: " + campCost;
+            return festName + "\nAdmission: \nGA: " + ticketGA + "\nVIP: " + ticketVIP + "\nCamp: " + campCost + "\nHotel: " + hotelCost + "\nAirBnb: " + bnbCost + "\nCar Parking: " + carParkingCost + "\nFood: " + foodCost;
         }
         
         public String saveFormat(FestivalDetails fest){
