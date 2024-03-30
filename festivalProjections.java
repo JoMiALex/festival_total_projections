@@ -19,7 +19,7 @@ import java.util.*;
         Map<String, FestivalDetails> storedFestival = new HashMap<String, FestivalDetails>();
         Map<String, FestivalDetails> savedProjection = new HashMap<String, FestivalDetails>();
         storedFestival = loadFestivals(storedFestival);
-        //savedProjection = ;
+        //savedProjection = accessSavedProjections(savedProjection);;
         FestivalDetails currFest;
 
         int choice, itemCount;
@@ -75,7 +75,6 @@ import java.util.*;
     }
 
 private static Map<String, FestivalDetails> loadFestivals(Map<String, FestivalDetails> festivals) {
-        //Map<String, FestivalDetails> festivals = new HashMap<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(PRESETFILE))) {
             String line;
             while ((line = reader.readLine()) != null) {
@@ -107,22 +106,26 @@ private static Map<String, FestivalDetails> loadFestivals(Map<String, FestivalDe
     private static void addFestival(Scanner keyboard, Map<String, FestivalDetails> festivals) {
         System.out.println("Enter the name of the festival:");
         String name = keyboard.nextLine();
-        System.out.println("Enter the admission cost:");
-        double admissionCost = keyboard.nextDouble();
+        System.out.println("Enter the GA admission cost:");
+        double ticketGA = keyboard.nextDouble();
+        System.out.println("Enter the VIP admission cost:");
+        double ticketVIP = keyboard.nextDouble();
+        System.out.println("Enter the camp cost:");
+        double campCost = keyboard.nextDouble();
         System.out.println("Enter the hotel cost:");
         double hotelCost = keyboard.nextDouble();
-        System.out.println("Enter the car parking cost:");
+        System.out.println("Enter the Air Bnb cost:");
+        double bnbCost = keyboard.nextDouble();
+        System.out.println("Enter the car parking pass cost:");
         double carParkingCost = keyboard.nextDouble();
         System.out.println("Enter the food cost:");
         double foodCost = keyboard.nextDouble();
-        System.out.println("Enter the camp cost:");
-        double campCost = keyboard.nextDouble();
-        //festivals.put(name, new FestivalDetails(admissionCost, hotelCost, carParkingCost, foodCost, campCost));
+        festivals.put(name, new FestivalDetails(name, ticketGA, ticketVIP, campCost, hotelCost, bnbCost, carParkingCost, foodCost));
         System.out.println("Festival added successfully!");
     }//format 
 
     private static void saveFestivals(Map<String, FestivalDetails> festivals) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(PRESETFILE))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(SAVEFILE))) {
             for (Map.Entry<String, FestivalDetails> entry : festivals.entrySet()) {
                 writer.write(entry.getKey() + ":" + entry.getValue() + "\n");
             }
@@ -236,6 +239,29 @@ private static void changePresets(Scanner keyboard, FestivalDetails festival) {
 
 
 private static void accessSavedProjections(Map<String, FestivalDetails> festivals) {
+    try (BufferedReader reader = new BufferedReader(new FileReader(SAVEFILE))) {
+        String line;
+        while ((line = reader.readLine()) != null) {
+            String[] parts = line.split(",");
+            String saveName = parts[0];
+            String festName = parts[1];
+            double totalCost = Double.parseDouble(parts[2]);
+            String details = parts[3];
+            /*
+            double ticketVIP = Double.parseDouble(parts[2]);
+            double campCost = Double.parseDouble(parts[3]);
+            double hotelCost = Double.parseDouble(parts[4]);
+            double bnbCost = Double.parseDouble(parts[5]);
+            double carParkingCost = Double.parseDouble(parts[6]);
+            double foodCost = Double.parseDouble(parts[7]);
+            */
+            //festivals.put(name, new FestivalDetails(name, ticketGA, ticketVIP, campCost, hotelCost, bnbCost, carParkingCost, foodCost));
+            //FestivalDetails festival = new FestivalDetails(parts[1], parts[2],parts[3],parts[4],parts[5]);
+        }
+    } catch (IOException e) {
+        // File does not exist or cannot be read
+    }
+    return festivals;
     System.out.println("Saved Projections:");
     // Implement logic to display saved projections
 }
