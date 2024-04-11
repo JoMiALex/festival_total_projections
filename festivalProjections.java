@@ -50,6 +50,12 @@ import java.util.*;
             
             switch(choice){
                 case 1:{
+                    boolean isKeyPresent = false;
+                    while(!isKeyPresent){
+                        System.out.print("Please enter the name of the festival you would like to go to: ");
+                        festName = keyboard.nextLine();
+                        isKeyPresent = storedFestival.containsKey(festName);
+                    }
                     addFestival(keyboard, storedFestival);
                     }break;
                 case 2:{
