@@ -23,10 +23,12 @@ import java.util.*;
         accessSavedProjections(savedProjection);;
         FestivalDetails currFest;
 
+        boolean isKeyPresent;
+
         int choice, itemCount;
         double admission = 600.0, hotelCost = 300.0, bnbCost = 210.0, 
         campCost= 150.0, foodCost = 180, carParkCost = 90.0,
-        total = 0;
+        total = -1;
         String msgError = "Error! Try again.",
         festName = "Coachella";
          Scanner keyboard = new Scanner(System.in);
@@ -50,12 +52,11 @@ import java.util.*;
             
             switch(choice){
                 case 1:{
-                    boolean isKeyPresent = false;
-                    while(!isKeyPresent){
-                        System.out.print("Please enter the name of the festival you would like to go to: ");
-                        festName = keyboard.nextLine();
-                        isKeyPresent = storedFestival.containsKey(festName);
-                    }
+                    System.out.print("Please enter the name of the festival you would like to go to: ");
+                    festName = keyboard.nextLine();
+                    isKeyPresent = checkKey(keyboard, festName, storedFestival);
+                    if(!isKeyPresent)
+                        break;
                     addFestival(keyboard, storedFestival);
                     }break;
                 case 2:{
@@ -66,6 +67,9 @@ import java.util.*;
                 case 3:{
                     System.out.println("Enter the name of the festival to change details:");
                     String festivalName = keyboard.nextLine();
+                    isKeyPresent = checkKey(keyboard, festName, storedFestival);
+                    if(!isKeyPresent)
+                        break;
                     currFest = storedFestival.get(festivalName);
                     changePresets(keyboard, currFest);
                     }break;
@@ -82,6 +86,18 @@ import java.util.*;
         }
         
     }
+
+static boolean checkKey(Scanner keyboard, String check, Map<String, FestivalDetails> festivals){
+    boolean valid = festivals.containsKey(check);
+    while(!valid){
+        System.out.println("Festival not found.\nEnter a new festival or type exit to leave");
+        check = keyboard.nextLine();
+        if(check.equalsIgnoreCase("exit"))
+            break;
+        valid = festivals.containsKey(check);
+    }
+    return valid;
+}
 
 private static void loadFestivals(Map<String, FestivalDetails> festivals) {
         try (BufferedReader reader = new BufferedReader(new FileReader(PRESETFILE))) {
@@ -105,12 +121,16 @@ private static void loadFestivals(Map<String, FestivalDetails> festivals) {
         //return festivals;
     }//generate multiple objects
 
-    private static void listFestivals(Map<String, FestivalDetails> festivals) {
-        System.out.println("Festivals:");
-        for (String festival : festivals.keySet()) {
-            System.out.println(festival + ": " + festivals.get(festival));
-        }
+private static void listFestivals(Map<String, FestivalDetails> festivals) {
+    System.out.println("Stored Festivals:");
+    int i = 0;
+    for (String festival : festivals.keySet()) {
+        i++;
+        System.out.println(i + ". " + festivals.get(festival).getName());
+        //System.out.println(festival + ": " + festivals.get(festival));
     }
+        System.out.println("______________________");
+}
 
     private static void addFestival(Scanner keyboard, Map<String, FestivalDetails> festivals) {
         System.out.println("Enter the name of the festival:");
