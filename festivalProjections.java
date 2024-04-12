@@ -66,7 +66,7 @@ import java.util.*;
                     }break;
                 case 3:{
                     System.out.println("Enter the name of the festival to change details:");
-                    String festivalName = keyboard.nextLine();
+                    festName = keyboard.nextLine();
                     isKeyPresent = checkKey(keyboard, festName, storedFestival);
                     if(!isKeyPresent)
                         break;
