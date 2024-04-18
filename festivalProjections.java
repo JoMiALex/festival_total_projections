@@ -52,12 +52,15 @@ import java.util.*;
             
             switch(choice){
                 case 1:{
+                    listFestivals(storedFestival);
                     System.out.print("Please enter the name of the festival you would like to go to: ");
                     festName = keyboard.nextLine();
                     isKeyPresent = checkKey(keyboard, festName, storedFestival);
                     if(!isKeyPresent)
                         break;
-                    addFestival(keyboard, storedFestival);
+                    currFest = storedFestival.get(festName);
+                    makeProjection(keyboard, currFest);
+                    //addFestival(keyboard, storedFestival);
                     }break;
                 case 2:{
                     for(int i = 1; i < 4;i++){
@@ -70,7 +73,7 @@ import java.util.*;
                     isKeyPresent = checkKey(keyboard, festName, storedFestival);
                     if(!isKeyPresent)
                         break;
-                    currFest = storedFestival.get(festivalName);
+                    currFest = storedFestival.get(festName);
                     changePresets(keyboard, currFest);
                     }break;
                 default:
@@ -123,13 +126,19 @@ private static void loadFestivals(Map<String, FestivalDetails> festivals) {
 
 private static void listFestivals(Map<String, FestivalDetails> festivals) {
     System.out.println("Stored Festivals:");
-    int i = 0;
+    int i = 1;
     for (String festival : festivals.keySet()) {
-        i++;
-        System.out.println(i + ". " + festivals.get(festival).getName());
+        System.out.println(i + ". " + festivals.get(festival).toString());
         //System.out.println(festival + ": " + festivals.get(festival));
+        i++;
     }
         System.out.println("______________________");
+}
+
+private static void makeProjection(Scanner keyboard, FestivalDetails fest){
+    int choice[] = {0,0,0,0};
+    //String option[] = {"Ticket:", }
+    System.out.print("Select a ticket type\n1. GA\n2. VIP\nSelection: ")
 }
 
     private static void addFestival(Scanner keyboard, Map<String, FestivalDetails> festivals) {
