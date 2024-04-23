@@ -28,7 +28,7 @@ import java.util.*;
         int choice, itemCount;
         double admission = 600.0, hotelCost = 300.0, bnbCost = 210.0, 
         campCost= 150.0, foodCost = 180, carParkCost = 90.0,
-        total = -1;
+        total = 0;
         String msgError = "Error! Try again.",
         festName = "Coachella";
          Scanner keyboard = new Scanner(System.in);
@@ -93,7 +93,7 @@ import java.util.*;
 static boolean checkKey(Scanner keyboard, String check, Map<String, FestivalDetails> festivals){
     boolean valid = festivals.containsKey(check);
     while(!valid){
-        System.out.println("Festival not found.\nEnter a new festival or type exit to leave");
+        System.out.print("Festival not found.\nWould you like to\n1. Try another festival\n2.  add a new festival");
         check = keyboard.nextLine();
         if(check.equalsIgnoreCase("exit"))
             break;
@@ -137,8 +137,13 @@ private static void listFestivals(Map<String, FestivalDetails> festivals) {
 
 private static void makeProjection(Scanner keyboard, FestivalDetails fest){
     int choice[] = {0,0,0,0};
-    //String option[] = {"Ticket:", }
-    System.out.print("Select a ticket type\n1. GA\n2. VIP\nSelection: ")
+    String option[] = {"Ticket:", "Housing:","Parking:","Food Cost"};
+    System.out.println("Please make a few selections so we can give a projection!");
+    for(int i = 0; i < 4;i++){
+        if(i == 2 && fest.getParking() == 0)
+            continue;
+        System.out.println
+    }
 }
 
     private static void addFestival(Scanner keyboard, Map<String, FestivalDetails> festivals) {
@@ -165,8 +170,9 @@ private static void makeProjection(Scanner keyboard, FestivalDetails fest){
     private static void saveFestivals(Map<String, FestivalDetails> festivals) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(SAVEFILE))) {
             for (Map.Entry<String, FestivalDetails> entry : festivals.entrySet()) {
-                writer.write(entry.getKey() + ":" + entry.getValue() + "\n");
+                writer.write(entry.getKey() + ":" + entry.getValue() + ",");
             }
+            writer.write("\n");
         } catch (IOException e) {
             // Error occurred while saving
             System.err.println("Error saving festivals: " + e.getMessage());
