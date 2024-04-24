@@ -53,12 +53,12 @@ import java.util.*;
             switch(choice){
                 case 1:{
                     listFestivals(storedFestival);
-                    System.out.print("Please enter the name of the festival you would like to go to: ");
-                    festName = keyboard.nextLine();
-                    isKeyPresent = checkKey(keyboard, festName, storedFestival);
+                    //System.out.print("Please enter the name of the festival you would like to go to: ");
+                    currFest = selectFest(keyboard, storedFestival);
+                    //isKeyPresent = selectFest(keyboard, storedFestival);
                     if(!isKeyPresent)
                         break;
-                    currFest = storedFestival.get(festName);
+                    //currFest = storedFestival.get(festName);
                     makeProjection(keyboard, currFest);
                     //addFestival(keyboard, storedFestival);
                     }break;
@@ -70,7 +70,7 @@ import java.util.*;
                 case 3:{
                     System.out.println("Enter the name of the festival to change details:");
                     festName = keyboard.nextLine();
-                    isKeyPresent = checkKey(keyboard, festName, storedFestival);
+                    isKeyPresent = checkKey(keyboard, storedFestival);
                     if(!isKeyPresent)
                         break;
                     currFest = storedFestival.get(festName);
@@ -90,16 +90,18 @@ import java.util.*;
         
     }
 
-static boolean checkKey(Scanner keyboard, String check, Map<String, FestivalDetails> festivals){
-    boolean valid = festivals.containsKey(check);
-    while(!valid){
-        System.out.print("Festival not found.\nWould you like to\n1. Try another festival\n2.  add a new festival");
-        check = keyboard.nextLine();
-        if(check.equalsIgnoreCase("exit"))
+static String selectFest(Scanner keyboard, Map<String, FestivalDetails> festivals){
+    System.out.print("Please enter the name of the festival you would like select: ");
+    String select = keyboard.nextLine();
+    while(!(festivals.containsKey(select))){
+        System.out.print("Festival not found.\nEnter another festival name or type done when you are finished: ");
+        select = keyboard.nextLine();
+        if(select.equalsIgnoreCase("done")){
+            select = "done";
             break;
-        valid = festivals.containsKey(check);
+        }
     }
-    return valid;
+    return select;
 }
 
 private static void loadFestivals(Map<String, FestivalDetails> festivals) {
