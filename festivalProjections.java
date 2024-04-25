@@ -51,15 +51,13 @@ import java.util.*;
             
             switch(choice){
                 case 1:{
-                    while(choice != 3){
+                    while(choice < 3){
                         listFestivals(storedFestival);
                         festName = selectFest(keyboard, storedFestival);
                         if(festName.equalsIgnoreCase("done"))
                             break;
                         currFest = storedFestival.get(festName);
-                        //currFest = storedFestival.get(festName);
                         makeProjection(keyboard, currFest);
-                        //addFestival(keyboard, storedFestival);
                     }
                     }break;
                 case 2:{
@@ -68,9 +66,9 @@ import java.util.*;
                     }
                     }break;
                 case 3:{
-                    listFestivals(storedFestival);
                     choice = 1;
                     while(choice < 3){
+                        listFestivals(storedFestival);
                         System.out.print("Would you like to:\n1. Add a new festival\n2. Modify a saved festival\n3. Return to menu\nSelection: ");
                         choice = keyboard.nextInt();
                         keyboard.nextLine();
@@ -147,12 +145,17 @@ private static void listFestivals(Map<String, FestivalDetails> festivals) {
 
 private static void makeProjection(Scanner keyboard, FestivalDetails fest){
     int choice[] = {0,0,0,0};
-    String option[] = {"Ticket:", "Housing:","Parking:","Food Cost"};
+    String option[] = {"Ticket", "Housing","Parking","Food Cost"};
     System.out.println("Please make a few selections so we can give a projection!");
     for(int i = 0; i < 4;i++){
         if(i == 2 && fest.getParking() == 0)
             continue;
-        System.out.println
+        else if(i == 0){
+            System.out.println("");
+        }else{
+            System.out.println("Would you like to include " + option[i] + "(1.Yes/2.No): ");
+            choice[i] = keyboard.nextInt();
+        }
     }
 }
 
