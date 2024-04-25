@@ -136,7 +136,7 @@ private static void listFestivals(Map<String, FestivalDetails> festivals) {
     System.out.println("Stored Festivals:");
     int i = 1;
     for (String festival : festivals.keySet()) {
-        System.out.println(i + ". " + festivals.get(festival).toString());
+        System.out.println(i + ". " + festivals.get(festival).getName());
         //System.out.println(festival + ": " + festivals.get(festival));
         i++;
     }
@@ -170,9 +170,11 @@ private static void makeProjection(Scanner keyboard, FestivalDetails fest){
         }else if(i == 2){
             total += (fest.getParking() * choice[i]);
         }else{
-
+            if(choice[i] == 1)
+                total += fest.getFood();
         }
     }
+    System.out.print("Your total is $" + total);
 }
 
     private static void addFestival(Scanner keyboard, Map<String, FestivalDetails> festivals) {
