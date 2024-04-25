@@ -145,16 +145,32 @@ private static void listFestivals(Map<String, FestivalDetails> festivals) {
 
 private static void makeProjection(Scanner keyboard, FestivalDetails fest){
     int choice[] = {0,0,0,0};
-    String option[] = {"Ticket", "Housing","Parking","Food Cost"};
-    System.out.println("Please make a few selections so we can give a projection!");
+    String option[][] = {{"Ticket:\n", "Housing:\n","Parking:\n","Food Cost:\n"},
+    {"1. GA\n2. VIP\n","1. Camping\n2. Hotel\n3. Air Bnb\n","Car pass count:\n","Include food\n1. Yes\n2. No\n"}};
+    double total = 0;
+    System.out.println(fest.toString() + "\nPlease make a few selections so we can give a projection!");
     for(int i = 0; i < 4;i++){
         if(i == 2 && fest.getParking() == 0)
             continue;
-        else if(i == 0){
-            System.out.println("");
+        System.out.print(option[i] + "Selection: ");
+        choice[i] = keyboard.nextInt();
+        keyboard.nextLine();
+        if(i == 0){
+            if(choice[i] == 1)
+                total += fest.getGA();
+            else
+                total += fest.getVIP();
+        }else if(i == 1){
+            if(choice[i] == 1)
+                total += fest.getCamp();
+            else if(choice[i] == 2)
+                total += fest.getHotel();
+            else
+                total += fest.getBnb();
+        }else if(i == 2){
+            total += (fest.getParking() * choice[i]);
         }else{
-            System.out.println("Would you like to include " + option[i] + "(1.Yes/2.No): ");
-            choice[i] = keyboard.nextInt();
+
         }
     }
 }
@@ -193,10 +209,6 @@ private static void makeProjection(Scanner keyboard, FestivalDetails fest){
     }
     
 private static void changePresets(Scanner keyboard, FestivalDetails festival) {
-    if (festival == null) {
-        System.out.println("Festival not found.");
-        return;
-    }
     System.out.println(festival.toString());
     System.out.println("Select the detail to change for " + festival.getName() + ":");
     System.out.println("1. GA Admission Cost");
