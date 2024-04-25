@@ -23,18 +23,17 @@ import java.util.*;
         accessSavedProjections(savedProjection);;
         FestivalDetails currFest;
 
-        boolean isKeyPresent;
-
         int choice, itemCount;
         double admission = 600.0, hotelCost = 300.0, bnbCost = 210.0, 
         campCost= 150.0, foodCost = 180, carParkCost = 90.0,
         total = 0;
+        boolean run = true;
         String msgError = "Error! Try again.",
         festName = "Coachella";
          Scanner keyboard = new Scanner(System.in);
          System.out.println("Hello Welcome to Festival Projections!\n");
         
-        while(total == 0){
+        while(run){
             System.out.println("Please make a choice from the menu options to get started.");
             System.out.println("__________________________________________________________");
             System.out.println("1. Make Festival Cost Projection");
@@ -52,15 +51,16 @@ import java.util.*;
             
             switch(choice){
                 case 1:{
-                    listFestivals(storedFestival);
-                    //System.out.print("Please enter the name of the festival you would like to go to: ");
-                    currFest = selectFest(keyboard, storedFestival);
-                    //isKeyPresent = selectFest(keyboard, storedFestival);
-                    if(!isKeyPresent)
-                        break;
-                    //currFest = storedFestival.get(festName);
-                    makeProjection(keyboard, currFest);
-                    //addFestival(keyboard, storedFestival);
+                    while(choice != 3){
+                        listFestivals(storedFestival);
+                        festName = selectFest(keyboard, storedFestival);
+                        if(festName.equalsIgnoreCase("done"))
+                            break;
+                        currFest = storedFestival.get(festName);
+                        //currFest = storedFestival.get(festName);
+                        makeProjection(keyboard, currFest);
+                        //addFestival(keyboard, storedFestival);
+                    }
                     }break;
                 case 2:{
                     for(int i = 1; i < 4;i++){
@@ -68,20 +68,29 @@ import java.util.*;
                     }
                     }break;
                 case 3:{
-                    System.out.println("Enter the name of the festival to change details:");
-                    festName = keyboard.nextLine();
-                    isKeyPresent = checkKey(keyboard, storedFestival);
-                    if(!isKeyPresent)
-                        break;
-                    currFest = storedFestival.get(festName);
-                    changePresets(keyboard, currFest);
+                    listFestivals(storedFestival);
+                    choice = 1;
+                    while(choice < 3){
+                        System.out.print("Would you like to:\n1. Add a new festival\n2. Modify a saved festival\n3. Return to menu\nSelection: ");
+                        choice = keyboard.nextInt();
+                        keyboard.nextLine();
+                        if(choice == 1)
+                            addFestival(keyboard, storedFestival);
+                        else if(choice == 2){
+                            festName = selectFest(keyboard, storedFestival);
+                            if(festName.equalsIgnoreCase("done"))
+                                break;
+                            currFest = storedFestival.get(festName);
+                            changePresets(keyboard, currFest);
+                        }
+                    }
                     }break;
                 default:
-                    total = -1;
+                    run = false;
             }
         }
 
-        if(total == -1)
+        if(total == 0)
             System.out.println("\nGoodbye!\n\n");
         else{
             System.out.printf("\n\nHave fun at %s this weekend!\n\n", festName);
@@ -97,7 +106,6 @@ static String selectFest(Scanner keyboard, Map<String, FestivalDetails> festival
         System.out.print("Festival not found.\nEnter another festival name or type done when you are finished: ");
         select = keyboard.nextLine();
         if(select.equalsIgnoreCase("done")){
-            select = "done";
             break;
         }
     }
@@ -180,47 +188,6 @@ private static void makeProjection(Scanner keyboard, FestivalDetails fest){
             System.err.println("Error saving festivals: " + e.getMessage());
         }
     }
-    /*
-    private static class FestivalDetails {
-        private double admissionCost;
-        private double hotelCost;
-        private double carParkingCost;
-        private double foodCost;
-        private double campCost;
-
-        public FestivalDetails(double admissionCost, double hotelCost, double carParkingCost, double foodCost, double campCost) {
-            this.admissionCost = admissionCost;
-            this.hotelCost = hotelCost;
-            this.carParkingCost = carParkingCost;
-            this.foodCost = foodCost;
-            this.campCost = campCost;
-        }
-        public void setAdmissionCost(double admissionCost) {
-            this.admissionCost = admissionCost;
-        }
-
-        public void setHotelCost(double hotelCost) {
-            this.hotelCost = hotelCost;
-        }
-        
-        public void setcarParkingCost(double carParkingCost){
-            this.carParkingCost = carParkingCost;
-        }
-        
-        public void setFoodCost(double foodCost){
-            this.foodCost = foodCost;
-        }
-        
-        public void setCampCost(double CampCost){
-            this.campCost = campCost;
-        }
-
-        @Override
-        public String toString() {
-            return "Admission: " + admissionCost + ", Hotel: " + hotelCost + ", Car Parking: " + carParkingCost + ", Food: " + foodCost + ", Camp: " + campCost;
-        }
-    }
-    */
     
 private static void changePresets(Scanner keyboard, FestivalDetails festival) {
     if (festival == null) {
@@ -279,7 +246,7 @@ private static void changePresets(Scanner keyboard, FestivalDetails festival) {
         default:
             System.out.println("Invalid choice, please try again.");
     }
-    System.out.println("_________________________________________\n Updated values:" + festival.toString());
+    System.out.println("_________________________________________\n Updated values:" + festival.toString() + "\n");
 }
 
 
