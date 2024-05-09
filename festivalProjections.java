@@ -20,7 +20,8 @@ import java.util.*;
         Map<String, String[]> savedProjection = new HashMap<String, String[]>();
 
         loadFestivals(storedFestival);
-        loadProjections(savedProjection);;
+        loadProjections(savedProjection);
+        System.out.println(savedProjection.keySet());
         FestivalDetails currFest;
 
         int choice, itemCount;
@@ -73,6 +74,7 @@ import java.util.*;
                         if(choice == 1)
                             addFestival(keyboard, storedFestival);
                         else if(choice == 2){
+                            listFestivals(storedFestival);
                             festName = selectFest(keyboard, storedFestival);
                             if(festName.equalsIgnoreCase("done"))
                                 break;
@@ -209,7 +211,7 @@ private static void makeProjection(Scanner keyboard, FestivalDetails fest,Map<St
                 total += fest.getFood();
                 sData[3] += ("Air Bnb: "+fest.getBnb() + " ");
             }
-            sData[3] += ("\n");
+            //sData[3] += ("\n");
         }
     }
     System.out.println("Your total is $" + total);
@@ -281,7 +283,7 @@ private static void saveFestivals(Map<String, FestivalDetails> festivals){
     } catch (Exception e) {
         System.err.println("Error clearing Preset file: " + e.getMessage());
     }
-    try (BufferedWriter writer = new BufferedWriter(new FileWriter(SAVEFILE))) {
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(PRESETFILE))) {
         for (FestivalDetails entry : festivals.values()) {
             writer.write(entry.saveFormat());
         }
