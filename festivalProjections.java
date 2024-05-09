@@ -20,7 +20,7 @@ import java.util.*;
         Map<String, String[]> savedProjection = new HashMap<String, String[]>();
 
         loadFestivals(storedFestival);
-        accessSavedProjections(savedProjection);;
+        loadProjections(savedProjection);;
         FestivalDetails currFest;
 
         int choice, itemCount;
@@ -61,9 +61,7 @@ import java.util.*;
                     }
                     }break;
                 case 2:{
-                    for(int i = 1; i < 4;i++){
-                        
-                    }
+                    viewSave(keyboard, savedProjection);
                     }break;
                 case 3:{
                     choice = 1;
@@ -108,6 +106,31 @@ static String selectFest(Scanner keyboard, Map<String, FestivalDetails> festival
         }
     }
     return select;
+}
+
+static void viewSave(Scanner keyB,Map<String, String[]> saves){
+    while(true){
+        System.out.println("Stored Projections:");
+        int i = 1;
+        String[] info;
+        for (String festival : saves.keySet()) {
+            info = saves.get(festival);
+            System.out.println(i + ". " + info[0]);
+            //System.out.println(festival + ": " + festivals.get(festival));
+            i++;
+        }
+        System.out.println(i + ". Back to main");
+        System.out.print("Selection: ");
+        int choice = keyB.nextInt();
+        keyB.nextLine();
+        while(choice < 1 || choice > i){
+            System.out.println("Invalid choice! Please make another selection\nSelection: ");
+            choice = keyB.nextInt();
+        }
+        if(choice == i)
+            break;
+        
+    }
 }
 
 private static void loadFestivals(Map<String, FestivalDetails> festivals) {
@@ -268,7 +291,7 @@ private static void changePresets(Scanner keyboard, FestivalDetails festival) {
 
 
 
-private static void accessSavedProjections(Map<String, String[]> festivals) {
+private static void loadProjections(Map<String, String[]> festivals) {
     try (BufferedReader reader = new BufferedReader(new FileReader(SAVEFILE))) {
         String line;
         while ((line = reader.readLine()) != null) {
