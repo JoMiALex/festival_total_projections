@@ -1,7 +1,9 @@
 #Project CPSC 362-07
 
 Names and email addresses of all partners:
+
 Vincent Tran - Vincentran675@csu.fullerton.edu
+
 John Michael Lott - jlott1004@csu.fullerton.edu
 
 The programming language: Java
