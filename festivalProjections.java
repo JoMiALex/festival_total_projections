@@ -57,7 +57,7 @@ import java.util.*;
                         if(festName.equalsIgnoreCase("done"))
                             break;
                         currFest = storedFestival.get(festName);
-                        makeProjection(keyboard, currFest);
+                        makeProjection(keyboard, currFest,savedProjection);
                     }
                     }break;
                 case 2:{
@@ -86,6 +86,9 @@ import java.util.*;
             }
         }
 
+        saveProjections(savedProjection);
+        saveFestivals(storedFestival);
+
         if(total == 0)
             System.out.println("\nGoodbye!\n\n");
         else{
@@ -96,14 +99,13 @@ import java.util.*;
     }
 
 static String selectFest(Scanner keyboard, Map<String, FestivalDetails> festivals){
-    System.out.print("Please enter the name of the festival you would like select: ");
-    String select = keyboard.nextLine();
-    while(!(festivals.containsKey(select))){
-        System.out.print("Festival not found.\nEnter another festival name or type done when you are finished: ");
+    //System.out.print("Please enter the name of the festival you would like select: ");
+    String select;
+    while(true){
+        System.out.print("Enter a festival name or type done when you are finished: ");
         select = keyboard.nextLine();
-        if(select.equalsIgnoreCase("done")){
+        if(select.equalsIgnoreCase("done") || festivals.containsKey(select))
             break;
-        }
     }
     return select;
 }
@@ -158,18 +160,20 @@ private static void loadFestivals(Map<String, FestivalDetails> festivals) {
 private static void listFestivals(Map<String, FestivalDetails> festivals) {
     System.out.println("Stored Festivals:");
     int i = 1;
-    for (String festival : festivals.keySet()) {
-        System.out.println(i + ". " + festivals.get(festival).getName());
+    for (FestivalDetails festival : festivals.values()) {
+        System.out.println(i + ". " + festival.getName());
         //System.out.println(festival + ": " + festivals.get(festival));
         i++;
     }
         System.out.println("______________________");
 }
 
-private static void makeProjection(Scanner keyboard, FestivalDetails fest){
+private static void makeProjection(Scanner keyboard, FestivalDetails fest,Map<String, String[]> saves){
+    String sData[] = {"","","",""};
     int choice[] = {0,0,0,0};
-    String option[][] = {{"Ticket:\n", "Housing:\n","Parking:\n","Food Cost:\n"},
-    {"1. GA\n2. VIP\n","1. Camping\n2. Hotel\n3. Air Bnb\n","Car pass count:\n","Include food\n1. Yes\n2. No\n"}};
+    String option[] = {"Ticket:\n1. GA\n2. VIP\n", "Housing:\n1. Camping\n2. Hotel\n3. Air Bnb\n",
+    "Parking:\nCar pass count:\n","Food Cost:\nInclude food\n1. Yes\n2. No\n"};
+    //{"1. GA\n2. VIP\n","1. Camping\n2. Hotel\n3. Air Bnb\n","Car pass count:\n","Include food\n1. Yes\n2. No\n"};
     double total = 0;
     System.out.println(fest.toString() + "\nPlease make a few selections so we can give a projection!");
     for(int i = 0; i < 4;i++){
@@ -179,25 +183,51 @@ private static void makeProjection(Scanner keyboard, FestivalDetails fest){
         choice[i] = keyboard.nextInt();
         keyboard.nextLine();
         if(i == 0){
-            if(choice[i] == 1)
+            if(choice[i] == 1){
                 total += fest.getGA();
-            else
+                sData[3] += ("GA: "+fest.getGA() + " ");
+            }else{
                 total += fest.getVIP();
+                sData[3] += ("VIP: "+fest.getVIP() + " ");
+            }
         }else if(i == 1){
-            if(choice[i] == 1)
+            if(choice[i] == 1){
                 total += fest.getCamp();
-            else if(choice[i] == 2)
+                sData[3] += ("Camp: "+fest.getCamp() + " ");
+            }else if(choice[i] == 2){
                 total += fest.getHotel();
-            else
+                sData[3] += ("Hotel: "+fest.getHotel() + " ");
+            }else{
                 total += fest.getBnb();
+                sData[3] += ("Air Bnb: "+fest.getBnb() + " ");
+            }
         }else if(i == 2){
             total += (fest.getParking() * choice[i]);
+            sData[3] += ("Parking: "+ (fest.getParking() * choice[i]) + " ");
         }else{
-            if(choice[i] == 1)
+            if(choice[i] == 1){
                 total += fest.getFood();
+                sData[3] += ("Air Bnb: "+fest.getBnb() + " ");
+            }
+            sData[3] += ("\n");
         }
     }
-    System.out.print("Your total is $" + total);
+    System.out.println("Your total is $" + total);
+    int x;
+    while(true){
+        System.out.print("Would you like to save this projection?(1=Yes,2=No)\nSelection: ");
+        x = keyboard.nextInt();
+        keyboard.nextLine();
+        if(x == 1 || x == 2)
+            break;
+    }
+    if(x == 1){
+        System.out.print("Enter a save name: ");
+        sData[0] = keyboard.nextLine();
+        sData[1] = fest.getName();
+        sData[2] = String.valueOf(total);
+        saves.put(sData[0],sData);
+    }
 }
 
     private static void addFestival(Scanner keyboard, Map<String, FestivalDetails> festivals) {
@@ -221,23 +251,45 @@ private static void makeProjection(Scanner keyboard, FestivalDetails fest){
         System.out.println("Festival added successfully!");
     }//format 
 
-    private static void saveFestivals(Map<String, FestivalDetails> festivals) {
+    private static void saveProjections(Map<String, String[]> projection) {
+        try {FileWriter clear = new FileWriter(SAVEFILE);
+            clear.write("");
+            clear.close();
+        } catch (Exception e) {
+            System.err.println("Error clearing save file: " + e.getMessage());
+        }
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(SAVEFILE))) {
-            for (Map.Entry<String, FestivalDetails> entry : festivals.entrySet()) {
-                writer.write(entry.getKey() + ":" + entry.getValue() + ",");
-                String SaveName = entry.getKey();
+            for (String[] entry : projection.values()) {
+                //writer.write(entry[0] + ":" + entry.getValue() + ",");
+                /*String SaveName = entry[0];
                 String[] Details = entry.getValue();
                 String FestName = details[0];
                 double TotalCost = Double.parseDouble(details[1]);
                 String ProjectionDetails = details[2];
-             
-                writer.write(SaveName + ", " + FestName + ", " + TotalCost + ", " + ProjectionDetails + "\n");
+                */
+                writer.write(entry[0] + ", " + entry[1] + ", " + entry[2] + ", " + entry[3] + "\n");
             }
         } catch (IOException e) {
             // Error occurred while saving
-            System.err.println("Error saving festivals: " + e.getMessage());
+            System.err.println("Error saving projections: " + e.getMessage());
         }
     }
+private static void saveFestivals(Map<String, FestivalDetails> festivals){
+    try {FileWriter clear = new FileWriter(PRESETFILE);
+        clear.write("");
+        clear.close();
+    } catch (Exception e) {
+        System.err.println("Error clearing Preset file: " + e.getMessage());
+    }
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(SAVEFILE))) {
+        for (FestivalDetails entry : festivals.values()) {
+            writer.write(entry.saveFormat());
+        }
+    } catch (IOException e) {
+        // Error occurred while saving
+        System.err.println("Error saving presets: " + e.getMessage());
+    }
+}
     
 private static void changePresets(Scanner keyboard, FestivalDetails festival) {
     System.out.println(festival.toString());
@@ -321,7 +373,7 @@ private static void loadProjections(Map<String, String[]> festivals) {
         // File does not exist or cannot be read
     }
     //return festivals;
-    System.out.println("Saved Projections:");
+    // System.out.println("Saved Projections:");
     // Implement logic to display saved projections
 }
 

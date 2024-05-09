@@ -72,8 +72,8 @@ public class FestivalDetails {
             return festName + "\nAdmission: \nGA: " + ticketGA + "\nVIP: " + ticketVIP + "\nCamp: " + campCost + "\nHotel: " + hotelCost + "\nAirBnb: " + bnbCost + "\nCar Parking: " + carParkingCost + "\nFood: " + foodCost;
         }
         
-        public String saveFormat(FestivalDetails fest){
+        public String saveFormat(){
             return festName + "," + ticketGA + "," + ticketVIP + "," + campCost
-            + "," + hotelCost + "," + bnbCost + "," + carParkingCost + "," + foodCost;
+            + "," + hotelCost + "," + bnbCost + "," + carParkingCost + "," + foodCost + "\n";
         }
 }
