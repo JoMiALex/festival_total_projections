@@ -24,10 +24,8 @@ import java.util.*;
         System.out.println(savedProjection.keySet());
         FestivalDetails currFest;
 
-        int choice, itemCount;
-        double admission = 600.0, hotelCost = 300.0, bnbCost = 210.0, 
-        campCost= 150.0, foodCost = 180, carParkCost = 90.0,
-        total = 0;
+        int choice;
+        double total = 0;
         boolean run = true;
         String msgError = "Error! Try again.",
         festName = "Coachella";
@@ -101,7 +99,6 @@ import java.util.*;
     }
 
 static String selectFest(Scanner keyboard, Map<String, FestivalDetails> festivals){
-    //System.out.print("Please enter the name of the festival you would like select: ");
     String select;
     while(true){
         System.out.print("Enter a festival name or type done when you are finished: ");
@@ -120,7 +117,6 @@ static void viewSave(Scanner keyB,Map<String, String[]> saves){
         for (String festival : saves.keySet()) {
             info = saves.get(festival);
             System.out.println(i + ". " + info[0]);
-            //System.out.println(festival + ": " + festivals.get(festival));
             i++;
         }
         System.out.println(i + ". Back to main");
@@ -151,7 +147,7 @@ private static void loadFestivals(Map<String, FestivalDetails> festivals) {
                 double carParkingCost = Double.parseDouble(parts[6]);
                 double foodCost = Double.parseDouble(parts[7]);
                 festivals.put(name, new FestivalDetails(name, ticketGA, ticketVIP, campCost, hotelCost, bnbCost, carParkingCost, foodCost));
-                //FestivalDetails festival = new FestivalDetails(parts[1], parts[2],parts[3],parts[4],parts[5]);
+                
             }
         } catch (IOException e) {
             // File does not exist or cannot be read
@@ -164,7 +160,6 @@ private static void listFestivals(Map<String, FestivalDetails> festivals) {
     int i = 1;
     for (FestivalDetails festival : festivals.values()) {
         System.out.println(i + ". " + festival.getName());
-        //System.out.println(festival + ": " + festivals.get(festival));
         i++;
     }
         System.out.println("______________________");
@@ -175,7 +170,6 @@ private static void makeProjection(Scanner keyboard, FestivalDetails fest,Map<St
     int choice[] = {0,0,0,0};
     String option[] = {"Ticket:\n1. GA\n2. VIP\n", "Housing:\n1. Camping\n2. Hotel\n3. Air Bnb\n",
     "Parking:\nCar pass count:\n","Food Cost:\nInclude food\n1. Yes\n2. No\n"};
-    //{"1. GA\n2. VIP\n","1. Camping\n2. Hotel\n3. Air Bnb\n","Car pass count:\n","Include food\n1. Yes\n2. No\n"};
     double total = 0;
     System.out.println(fest.toString() + "\nPlease make a few selections so we can give a projection!");
     for(int i = 0; i < 4;i++){
@@ -211,7 +205,6 @@ private static void makeProjection(Scanner keyboard, FestivalDetails fest,Map<St
                 total += fest.getFood();
                 sData[3] += ("Air Bnb: "+fest.getBnb() + " ");
             }
-            //sData[3] += ("\n");
         }
     }
     System.out.println("Your total is $" + total);
@@ -262,13 +255,6 @@ private static void makeProjection(Scanner keyboard, FestivalDetails fest,Map<St
         }
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(SAVEFILE))) {
             for (String[] entry : projection.values()) {
-                //writer.write(entry[0] + ":" + entry.getValue() + ",");
-                /*String SaveName = entry[0];
-                String[] Details = entry.getValue();
-                String FestName = details[0];
-                double TotalCost = Double.parseDouble(details[1]);
-                String ProjectionDetails = details[2];
-                */
                 writer.write(entry[0] + ", " + entry[1] + ", " + entry[2] + ", " + entry[3] + "\n");
             }
         } catch (IOException e) {
@@ -356,26 +342,11 @@ private static void loadProjections(Map<String, String[]> festivals) {
         String line;
         while ((line = reader.readLine()) != null) {
             String[] parts = line.split(",");
-            //String saveName = parts[0];
-            //String festName = parts[1];
-            //double totalCost = Double.parseDouble(parts[2]);
-            //String details = parts[3];
-            /*
-            double ticketVIP = Double.parseDouble(parts[2]);
-            double campCost = Double.parseDouble(parts[3]);
-            double hotelCost = Double.parseDouble(parts[4]);
-            double bnbCost = Double.parseDouble(parts[5]);
-            double carParkingCost = Double.parseDouble(parts[6]);
-            double foodCost = Double.parseDouble(parts[7]);
-            */
             festivals.put(parts[0], parts);
-            //FestivalDetails festival = new FestivalDetails(parts[1], parts[2],parts[3],parts[4],parts[5]);
         }
     } catch (IOException e) {
         // File does not exist or cannot be read
     }
-    //return festivals;
-    // System.out.println("Saved Projections:");
     // Implement logic to display saved projections
 }
 

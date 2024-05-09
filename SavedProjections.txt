@@ -1,3 +1,3 @@
-Haha,  EDCLV,  700.0,  GA: 400.0 Camp: 150.0 Parking: 150.0 
-JMs Save,  Coachella,  3210.00,  VIP: 600.0 Camping: 1200.0 Food: 300.0
-TeaTime, Lollapalooza, 2000.0, VIP: 900.0 Air Bnb: 1000.0 Air Bnb: 1000.0 
+Haha,   EDCLV,   700.0,   GA: 400.0 Camp: 150.0 Parking: 150.0 
+JMs Save,   Coachella,   3210.00,   VIP: 600.0 Camping: 1200.0 Food: 300.0
+TeaTime,  Lollapalooza,  2000.0,  VIP: 900.0 Air Bnb: 1000.0 Air Bnb: 1000.0 
