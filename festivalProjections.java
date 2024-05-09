@@ -225,8 +225,14 @@ private static void makeProjection(Scanner keyboard, FestivalDetails fest){
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(SAVEFILE))) {
             for (Map.Entry<String, FestivalDetails> entry : festivals.entrySet()) {
                 writer.write(entry.getKey() + ":" + entry.getValue() + ",");
+                String SaveName = entry.getKey();
+                String[] Details = entry.getValue();
+                String FestName = details[0];
+                double TotalCost = Double.parseDouble(details[1]);
+                String ProjectionDetails = details[2];
+             
+                writer.write(SaveName + ", " + FestName + ", " + TotalCost + ", " + ProjectionDetails + "\n");
             }
-            writer.write("\n");
         } catch (IOException e) {
             // Error occurred while saving
             System.err.println("Error saving festivals: " + e.getMessage());
