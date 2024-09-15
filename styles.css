@@ -1,0 +1,11 @@
+.root {
+    -fx-background-color: orange;
+}
+
+.decoration-background {
+    -fx-fill: orange;
+}
+
+.title-bar {
+    -fx-background-color: orange;
+}
